@@ -1,0 +1,40 @@
+//Define trigger & echo pins 
+//replace ULTRASONIC_TRIG & ULTRASONIC_ECHO with these values (in library code)
+const int trig = 28; 
+const int echo = 27;
+
+long duration;
+int distance; 
+
+void setup() {
+  // put your setup code here, to run once:
+  Serial.begin(115200); //set baudrate
+  pinMode(trig,OUTPUT); 
+  pinMode(echo,INPUT); 
+}
+
+void loop() {
+  // put your main code here, to run repeatedly:
+  digitalWrite(trig,LOW); //reset trig pin 
+  delayMicroseconds(2); 
+
+  //Send a pulse 
+  digitalWrite(trig,HIGH);
+  delayMicroseconds(10);
+  digitalWrite(trig,LOW);
+  //delayMicroseconds(10);
+
+  //Measure echo 
+  duration = pulseIn(echo,HIGH); // return how long a pulse last for 
+
+  distance = duration/29.1/2; //29.1 (spd of sound in air) 2(time for 2 distances)
+
+  Serial.print("Distance: ");
+  Serial.print(distance);
+  Serial.println(" cm");
+
+  delay(100); 
+}
+
+//To Do: 
+  //Code edge cases ***
